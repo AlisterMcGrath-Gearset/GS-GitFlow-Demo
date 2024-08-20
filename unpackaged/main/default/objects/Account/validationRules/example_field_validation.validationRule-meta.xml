@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>example_field_validation</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+   ISBLANK( example_field__c ),
+   LEN( example_field__c ) &lt;&gt; 7
+)</errorConditionFormula>
+    <errorDisplayField>example_field__c</errorDisplayField>
+    <errorMessage>example field must be seven digits.</errorMessage>
+</ValidationRule>

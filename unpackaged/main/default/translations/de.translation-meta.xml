@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?><Translations xmlns="http://soap.sforce.com/2006/04/metadata">
+    <flowDefinitions>
+        <flows>
+            <screens>
+                <fields>
+                    <name>Account</name>
+                </fields>
+                <fields>
+                    <inputParameters>
+                        <name>firstName</name>
+                        <value />
+                    </inputParameters>
+                    <inputParameters>
+                        <name>lastName</name>
+                        <value />
+                    </inputParameters>
+                    <name>contactName</name>
+                </fields>
+                <fields>
+                    <inputParameters>
+                        <name>label</name>
+                        <value />
+                    </inputParameters>
+                    <inputParameters>
+                        <name>messageToggleActive</name>
+                        <value />
+                    </inputParameters>
+                    <inputParameters>
+                        <name>messageToggleInactive</name>
+                        <value />
+                    </inputParameters>
+                    <name>update_toggle</name>
+                </fields>
+                <name>Contact_Info</name>
+            </screens>
+        </flows>
+        <fullName>New_Contact</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows />
+        <fullName>SendAnEmail</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows />
+        <fullName>Target_Revenue_Modifier</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows />
+        <fullName>Update_Cases_To_Closed</fullName>
+    </flowDefinitions>
+</Translations>

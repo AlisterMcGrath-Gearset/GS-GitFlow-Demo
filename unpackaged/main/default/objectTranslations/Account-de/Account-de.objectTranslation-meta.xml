@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <layouts>
+        <layout>Regular View</layout>
+        <sections>
+            <label>
+                <!-- Custom Links -->
+            </label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label>
+                <!-- Fields -->
+            </label>
+            <section>Fields</section>
+        </sections>
+    </layouts>
+    <recordTypes>
+        <description>
+            <!-- A record type for subscription renewals. -->
+        </description>
+        <label>
+            <!-- Gearset renewal -->
+        </label>
+        <name>Gearset_renewal</name>
+    </recordTypes>
+    <recordTypes>
+        <description>
+            <!-- An Account representing a Household containing one or more individuals -->
+        </description>
+        <label>
+            <!-- Household Account -->
+        </label>
+        <name>HH_Account</name>
+    </recordTypes>
+    <recordTypes>
+        <description>
+            <!-- An Account representing an organization -->
+        </description>
+        <label>
+            <!-- Organization -->
+        </label>
+        <name>Organization</name>
+    </recordTypes>
+    <validationRules>
+        <errorMessage>
+            <!-- example field must be seven digits. -->
+        </errorMessage>
+        <name>example_field_validation</name>
+    </validationRules>
+    <webLinks>
+        <label>
+            <!-- Billing -->
+        </label>
+        <name>Billing</name>
+    </webLinks>
+</CustomObjectTranslation>

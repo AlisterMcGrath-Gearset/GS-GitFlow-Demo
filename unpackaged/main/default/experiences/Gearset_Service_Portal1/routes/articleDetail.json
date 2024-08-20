@@ -1,0 +1,11 @@
+{
+  "activeViewId" : "690206bf-ba90-49bb-955e-e5692a5ff56f",
+  "appPageId" : "04d37516-f1d2-4c33-bfe5-18a420ef7bf8",
+  "configurationTags" : [ ],
+  "devName" : "Article_Detail",
+  "id" : "de5fa5e9-9353-4948-b5ad-9d86e147faba",
+  "label" : "Article Detail",
+  "routeType" : "article",
+  "type" : "route",
+  "urlPrefix" : "article"
+}
