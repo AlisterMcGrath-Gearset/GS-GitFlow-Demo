@@ -1,4 +1,4 @@
-public class CaseClosureScheduler {
+public inherited sharing class CaseClosureScheduler {
     
     // Method to close cases that have not been modified in the last 180 days
     public static void closeOldCases() {
