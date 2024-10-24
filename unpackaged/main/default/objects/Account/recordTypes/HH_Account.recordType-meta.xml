@@ -6,6 +6,7 @@
     <label>Household Account</label>
     <picklistValues>
         <picklist>AccountSource</picklist>
+        
         <values>
             <fullName>Other</fullName>
             <default>false</default>
@@ -18,6 +19,7 @@
             <fullName>Phone Inquiry</fullName>
             <default>false</default>
         </values>
+        
         <values>
             <fullName>Purchased List</fullName>
             <default>false</default>
@@ -26,6 +28,7 @@
             <fullName>Web</fullName>
             <default>false</default>
         </values>
+        
     </picklistValues>
     <picklistValues>
         <picklist>Active__c</picklist>
