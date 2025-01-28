@@ -1,4 +1,4 @@
-public class AccountTests { 
+public inherited sharing class AccountTests { 
      public void createAccount() { 
          Account account = new Account(Name = 'PMD'); 
          insert account; 

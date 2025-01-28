@@ -1,4 +1,4 @@
-public class AdminVisibilityHandler {
+public inherited sharing class AdminVisibilityHandler {
     public static void applyObjectVisibility(Id userId) {
         List<PermissionSetAssignment> psaList = new List<PermissionSetAssignment>();
         
