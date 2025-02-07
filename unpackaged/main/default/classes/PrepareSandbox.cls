@@ -1,5 +1,5 @@
 // these need to be suppressed because following these rules cause compile error
-global class PrepareSandbox implements SandboxPostCopy // NOPMD
+global inherited sharing class PrepareSandbox implements SandboxPostCopy // NOPMD
 {
     global void runApexClass(SandboxContext context)
     {
