@@ -31,4 +31,9 @@
         <default>false</default>
         <label>Place Order</label>
     </standardValue>
+    <standardValue>
+        <fullName>Order To Asset</fullName>
+        <default>false</default>
+        <label>Order To Asset</label>
+    </standardValue>
 </StandardValueSet>
