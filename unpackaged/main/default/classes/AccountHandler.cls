@@ -1,4 +1,4 @@
-public class AccountHandler {
+public inherited sharing class AccountHandler {
     public static Account insertNewAccount(String account_name){
  		Account acct = new Account(Name=account_name);
         try {
