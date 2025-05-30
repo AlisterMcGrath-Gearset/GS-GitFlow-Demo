@@ -3,9 +3,9 @@
     <fullName>Conflict_Replay__c</fullName>
     <description>This is a conflict replay field :)</description>
     <externalId>false</externalId>
-    <inlineHelpText>This is a conflict replay field :)</inlineHelpText>
+    <inlineHelpText>This is a conflict replay field also :)</inlineHelpText>
     <label>Conflict Replay</label>
-    <length>100</length>
+    <length>95</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <type>Text</type>
