@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This Auto-Launched Flow automates Case management and escalation. It triggers on Case creation and includes a 9-month check to auto-close stale Cases. It escalates high-priority Cases, assigns Tier 3 support, sends emails, updates statuses, and notifies the DevOps team, ensuring efficient Case handling.</description>
     <actionCalls>
         <name>Apex_process_to_resolve_discounting</name>
         <label>Apex process to resolve discounting</label>
