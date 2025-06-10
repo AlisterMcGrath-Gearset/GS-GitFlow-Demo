@@ -18,8 +18,7 @@ public with sharing class GearsetClaytonCoverageDemo {
         ApexPages.currentPage().setCookies(new Cookie[] { c });
 
         // Logging sensitive info - Single log
-        System.debug('Set insecure cookie with session ID: ' + c.getValue());
-    }
+        }
 
     /**
      * 6) Logs sensitive information.
