@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>From_Event__c</fullName>
-    <defaultValue>false</defaultValue>
+    <fullName>DiscountRate__c</fullName>
     <externalId>false</externalId>
-    <label>From Event</label>
+    <label>DiscountRate</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
     <trackFeedHistory>false</trackFeedHistory>
-    <type>Checkbox</type>
+    <type>Currency</type>
 </CustomField>
