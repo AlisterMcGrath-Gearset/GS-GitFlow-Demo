@@ -2,7 +2,7 @@ public class AccountQuoteID {
     public static void transformAccounts(List<Account> accounts) {
         for (Account acc : accounts) {
             // Check if the Active__c field is set to "Yes"
-            if (acc.Active__c != 'Yes') {
+            if (acc.Active__c != 'No') {
                 continue; // Skip this account and move to the next one
             }
 
@@ -24,10 +24,10 @@ public class AccountQuoteID {
                 // Combine the Account Name prefix with the remaining subscription number
                 newSubscriptionNumber = accountNamePrefix + subscriptionNumber;
 
-                // Ensure the length does not exceed 10
-                if (newSubscriptionNumber.length() > 10) {
+                // Ensure the length does not exceed 8
+                if (newSubscriptionNumber.length() > 8) {
                     // Trim to 10 characters and add "!"
-                    newSubscriptionNumber = newSubscriptionNumber.substring(0, 10) + '!';
+                    newSubscriptionNumber = newSubscriptionNumber.substring(0, 8) + '!';
                 }
 
                 // Check if "USA" is present in any part of the BillingAddress
@@ -41,9 +41,9 @@ public class AccountQuoteID {
                     String billingCountryLower = acc.BillingCountry.toLowerCase();
 
                     if (billingAddressLower.contains('usa') ||
-                        billingCityLower.contains('usa') ||
                         billingStateLower.contains('usa') ||
                         billingPostalCodeLower.contains('usa') ||
+                        billingCityLower.contains('new york') ||
                         billingCountryLower.contains('usa')) {
                         containsUSA = true;
                     }
