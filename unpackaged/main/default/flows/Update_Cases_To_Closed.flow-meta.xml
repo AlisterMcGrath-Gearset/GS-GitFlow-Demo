@@ -1,15 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>60.0</apiVersion>
     <decisions>
         <description>If the Status is Open, after 3 days auto-close.</description>
         <name>DecisionIfCaseIsClosed</name>
         <label>DecisionIfCaseIsClosed</label>
-        <locationX>374</locationX>
-        <locationY>276</locationY>
-        <defaultConnector>
-            <targetReference>DeleteCases</targetReference>
-        </defaultConnector>
+        <locationX>1065</locationX>
+        <locationY>289</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>StatusIsntClosed</name>
@@ -21,13 +18,50 @@
                     <stringValue>Closed</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>LastModifiedDate</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>90.0</numberValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>UpdateToClosed</targetReference>
             </connector>
-            <label>StatusIsn&apos;tClosed</label>
+            <label>StatusIsn'tClosed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Escalate Cases for High Priority Customers</description>
+        <name>Is_Customer_High_Priority</name>
+        <label>Is Customer High Priority?</label>
+        <locationX>409</locationX>
+        <locationY>303</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Escalate_Cases</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Account.SLA__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Gold</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_as_High_Priority</targetReference>
+            </connector>
+            <label>Escalate Cases</label>
         </rules>
     </decisions>
     <environments>Default</environments>
+    <formulas>
+        <description>If LastModifiedDate is Older than a Month</description>
+        <name>LastModifiedDate</name>
+        <dataType>Number</dataType>
+        <expression>ToDAY() - DATEVALUE({!$Record.LastModifiedDate})</expression>
+        <scale>2</scale>
+    </formulas>
     <interviewLabel>Update Cases To Closed {!$Flow.CurrentDateTime}</interviewLabel>
     <label>AutoUpdateCases</label>
     <processMetadataValues>
@@ -39,7 +73,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -49,40 +83,54 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordDeletes>
-        <description>DeletingCases</description>
-        <name>DeleteCases</name>
-        <label>DeleteCases</label>
-        <locationX>506</locationX>
-        <locationY>384</locationY>
+    <recordUpdates>
+        <name>Set_as_High_Priority</name>
+        <label>Set as High Priority</label>
+        <locationX>368</locationX>
+        <locationY>526</locationY>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Escalated</stringValue>
+            </value>
+        </inputAssignments>
         <inputReference>$Record</inputReference>
-    </recordDeletes>
+    </recordUpdates>
     <recordUpdates>
         <description>UpdateToClosed</description>
         <name>UpdateToClosed</name>
         <label>UpdateToClosed</label>
-        <locationX>242</locationX>
-        <locationY>384</locationY>
+        <locationX>1242</locationX>
+        <locationY>503</locationY>
         <inputAssignments>
             <field>Status</field>
             <value>
                 <stringValue>Complete</stringValue>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>Subject</field>
+            <value>
+                <stringValue>Resolved: {!$Record.CaseNumber}: {!$Record.Subject}: Priority{!$Record.Priority}</stringValue>
+            </value>
+        </inputAssignments>
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <start>
-        <locationX>50</locationX>
-        <locationY>0</locationY>
+        <locationX>530</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>Is_Customer_High_Priority</targetReference>
+        </connector>
         <object>Case</object>
         <recordTriggerType>Create</recordTriggerType>
         <scheduledPaths>
-            <name>Run_after_2_Years</name>
+            <name>Run_after_1_Year</name>
             <connector>
                 <targetReference>DecisionIfCaseIsClosed</targetReference>
             </connector>
-            <label>Run after 2 Years</label>
-            <offsetNumber>24</offsetNumber>
+            <label>Run after 1 Year1</label>
+            <offsetNumber>12</offsetNumber>
             <offsetUnit>Months</offsetUnit>
             <timeSource>RecordTriggerEvent</timeSource>
         </scheduledPaths>
