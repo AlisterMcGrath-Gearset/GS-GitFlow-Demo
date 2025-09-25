@@ -1,0 +1,21 @@
+{
+  "required" : [ "Input:PriceRequest" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "Input:PriceRequest" : {
+      "title" : "PriceRequest",
+      "description" : "The input is the is a Text String that's going to be sent to the Prompt Template",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : true
+    },
+    "citationMode" : {
+      "title" : "Citation Mode",
+      "description" : "Select Citation Mode",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}
