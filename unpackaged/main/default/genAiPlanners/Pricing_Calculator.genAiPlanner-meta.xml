@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GenAiPlanner xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Delivering personalized interactions with an autonomous AI agent. Gearset's Pricing Calculator Agent intelligently supports internal employees calculate the Gearset Yearly Subscription costs based on the number of licenses for each of Gearset's products.</description>
+    <genAiPlugins>
+        <genAiPluginName>SvcCopilotTmpl__GeneralFAQ</genAiPluginName>
+    </genAiPlugins>
+    <masterLabel>Pricing Calculator</masterLabel>
+    <plannerType>AiCopilot__ReAct</plannerType>
+</GenAiPlanner>

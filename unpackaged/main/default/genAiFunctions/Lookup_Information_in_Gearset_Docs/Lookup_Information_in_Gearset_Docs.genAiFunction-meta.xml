@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GenAiFunction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This Template goes and searches for information in the Gearset Docs site to answer common user requests.</description>
+    <invocationTarget>Lookup_Information_in_Gearset_Docs</invocationTarget>
+    <invocationTargetType>generatePromptResponse</invocationTargetType>
+    <isConfirmationRequired>false</isConfirmationRequired>
+    <masterLabel>Lookup Information in Gearset Docs</masterLabel>
+</GenAiFunction>
