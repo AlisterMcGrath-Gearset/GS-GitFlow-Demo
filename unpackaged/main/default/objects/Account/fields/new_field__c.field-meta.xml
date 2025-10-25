@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>From_Event__c</fullName>
+    <fullName>new_field__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>From Event</label>
+    <label>new field</label>
     <trackFeedHistory>false</trackFeedHistory>
     <type>Checkbox</type>
 </CustomField>
