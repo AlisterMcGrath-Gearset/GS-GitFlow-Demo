@@ -1,42 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Send_Email_To_Head_Of_Sales</name>
-        <label>Send Email To Head Of Sales</label>
+        <name>Apex_process_to_resolve_discounting</name>
+        <label>Apex process to resolve discounting</label>
         <locationX>50</locationX>
-        <locationY>647</locationY>
+        <locationY>755</locationY>
+        <actionName>GearsetClaytonCoverageDemo</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <nameSegment>GearsetClaytonCoverageDemo</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Fault_alert_manager_for_custom_resolution</name>
+        <label>Fault - alert manager for custom resolution</label>
+        <locationX>314</locationX>
+        <locationY>755</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
-        <connector>
-            <targetReference>Update_Case</targetReference>
-        </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>emailSubject</name>
             <value>
-                <stringValue>5+ open opps on account industry change</stringValue>
+                <stringValue>{!$Record.Id} failed to save</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
             <name>emailBody</name>
             <value>
-                <elementReference>EmailBody</elementReference>
+                <stringValue>{!$Record.Id} failed to save. </stringValue>
             </value>
         </inputParameters>
         <inputParameters>
             <name>recipientId</name>
             <value>
-                <stringValue>tom@gearset.com</stringValue>
+                <elementReference>$Record.Owner.Email</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
     </actionCalls>
     <actionCalls>
         <name>Send_Email_To_Owner</name>
         <label>Send Email To Owner</label>
-        <locationX>314</locationX>
+        <locationX>50</locationX>
         <locationY>647</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
+        <connector>
+            <targetReference>Apex_process_to_resolve_discounting</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Fault_alert_manager_for_custom_resolution</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>emailSubject</name>
@@ -56,12 +71,13 @@
                 <stringValue>tom@gearset.com</stringValue>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
     </actionCalls>
     <apiVersion>59.0</apiVersion>
     <assignments>
         <name>Count_number_of_records</name>
         <label>Count number of records</label>
-        <locationX>358</locationX>
+        <locationX>710</locationX>
         <locationY>431</locationY>
         <assignmentItems>
             <assignToReference>NumberOfOpenOpps</assignToReference>
@@ -77,13 +93,13 @@
     <assignments>
         <name>Update_opp</name>
         <label>Update opp</label>
-        <locationX>754</locationX>
+        <locationX>1458</locationX>
         <locationY>755</locationY>
         <assignmentItems>
             <assignToReference>Set_to_needs_analysis.StageName</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Needs Analysis</stringValue>
+                <stringValue>Proposal/Price Quote</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -100,27 +116,12 @@
     <decisions>
         <name>Check_Number_Of_Open_Opps</name>
         <label>Check Number Of Open Opps</label>
-        <locationX>358</locationX>
+        <locationX>710</locationX>
         <locationY>539</locationY>
         <defaultConnector>
             <targetReference>Set_to_needs_analysis</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>More_than_5</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>NumberOfOpenOpps</leftValueReference>
-                <operator>GreaterThan</operator>
-                <rightValue>
-                    <numberValue>5.0</numberValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Send_Email_To_Head_Of_Sales</targetReference>
-            </connector>
-            <label>More than 5</label>
-        </rules>
         <rules>
             <name>More_than_3</name>
             <conditionLogic>and</conditionLogic>
@@ -136,14 +137,57 @@
             </connector>
             <label>More than 3</label>
         </rules>
+        <rules>
+            <name>Discount_already_set</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.DiscountPercentage__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+            </conditions>
+            <connector>
+                <targetReference>Filter_for_discounted_Accs_with_5_Opps</targetReference>
+            </connector>
+            <label>Discount already set</label>
+        </rules>
+        <rules>
+            <name>Lost_Opps</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Filter_for_discounted_Accs_with_5_Opps</leftValueReference>
+                <operator>NotEqualTo</operator>
+            </conditions>
+            <connector>
+                <targetReference>Filter_for_Lost_Opps_w_bespoke_discount</targetReference>
+            </connector>
+            <label>Lost Opps</label>
+        </rules>
     </decisions>
     <environments>Default</environments>
     <interviewLabel>Account Industry Change {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Account Industry Change</label>
     <loops>
+        <name>Filter_for_Lost_Opps_w_bespoke_discount</name>
+        <label>TEST - Filter for Lost Opps w/ bespoke discount</label>
+        <locationX>1018</locationX>
+        <locationY>647</locationY>
+        <collectionReference>Filter_for_discounted_Accs_with_5_Opps</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+    </loops>
+    <loops>
+        <name>Loop_all</name>
+        <label>Loop all</label>
+        <locationX>666</locationX>
+        <locationY>755</locationY>
+        <collectionReference>Filter_for_discounted_Accs_with_5_Opps</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Update_associated_opportunities_with_new_discount</targetReference>
+        </nextValueConnector>
+    </loops>
+    <loops>
         <name>Set_to_needs_analysis</name>
         <label>Set to needs analysis</label>
-        <locationX>666</locationX>
+        <locationX>1370</locationX>
         <locationY>647</locationY>
         <collectionReference>Get_Opps</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -174,9 +218,27 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
+        <name>Filter_for_discounted_Accs_with_5_Opps</name>
+        <label>Filter for discounted Accs with 5+ Opps</label>
+        <locationX>666</locationX>
+        <locationY>647</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Loop_all</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DiscountPercentage__c</field>
+            <operator>NotEqualTo</operator>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Account</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Opps</name>
         <label>Get Opps</label>
-        <locationX>358</locationX>
+        <locationX>710</locationX>
         <locationY>323</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -185,23 +247,9 @@
         <filterLogic>and</filterLogic>
         <filters>
             <field>AccountId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>StageName</field>
             <operator>NotEqualTo</operator>
             <value>
-                <stringValue>Closed Won</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>StageName</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <stringValue>Closed Lost</stringValue>
+                <stringValue>001J7000002UEf6IAG</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
@@ -209,35 +257,41 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
-        <name>Update_Case</name>
-        <label>Update Case</label>
-        <locationX>50</locationX>
-        <locationY>755</locationY>
-        <inputReference>OppsToUpdate</inputReference>
+        <name>Update_associated_opportunities_with_new_discount</name>
+        <label>Update associated opportunities with new discount</label>
+        <locationX>754</locationX>
+        <locationY>863</locationY>
+        <inputAssignments>
+            <field>Description</field>
+            <value>
+                <elementReference>$Record.DiscountPercentage__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Update_Opps</name>
         <label>Update Opps</label>
-        <locationX>666</locationX>
+        <locationX>1370</locationX>
         <locationY>947</locationY>
         <inputReference>OppsToUpdate</inputReference>
     </recordUpdates>
     <start>
-        <locationX>232</locationX>
+        <locationX>584</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Opps</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>Industry</field>
-            <operator>IsChanged</operator>
+            <field>CreatedDate</field>
+            <operator>GreaterThanOrEqualTo</operator>
             <value>
-                <booleanValue>true</booleanValue>
+                <dateTimeValue>2024-01-01T00:01:00.000Z</dateTimeValue>
             </value>
         </filters>
         <object>Account</object>
-        <recordTriggerType>Update</recordTriggerType>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Draft</status>
